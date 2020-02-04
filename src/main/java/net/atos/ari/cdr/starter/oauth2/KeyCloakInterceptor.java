@@ -18,8 +18,7 @@
  * See README file for the full disclaimer information and LICENSE file for full license 
  * information in the project root.
  * 
- * @author	Carlos Cavero
- *			Atos Research and Innovation, Atos SPAIN SA
+ * @author Atos Research and Innovation, Atos SPAIN SA
  * 
  * Interceptor which checks the authenticity of the KeyCloak token in the header
  */
@@ -42,47 +41,47 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 
 public class KeyCloakInterceptor extends InterceptorAdapter {
-	private static final Logger logger = LoggerFactory.getLogger(KeyCloakInterceptor.class);
-	
-	// Const from environment variables
-	private static final String OAUTH_ENABLE = System.getenv("OAUTH_ENABLE");
-	private static final String OAUTH_URL = System.getenv("OAUTH_URL");
-	
-	private static final String BEARER = "BEARER ";
+    private static final Logger logger = LoggerFactory.getLogger(KeyCloakInterceptor.class);
 
-	@Override
+    // Const from environment variables
+    private static final String OAUTH_ENABLE = System.getenv("OAUTH_ENABLE");
+    private static final String OAUTH_URL = System.getenv("OAUTH_URL");
+
+    private static final String BEARER = "BEARER ";
+
+    @Override
     public boolean incomingRequestPreProcessed(HttpServletRequest theRequest, HttpServletResponse theResponse) {
 
         String resourcePath = theRequest.getPathInfo();
         logger.info("Accessing Resource: {}", resourcePath);
-		
+
         // OAuth authentication is disabled if the environment variable is set to false or not set
-		if (OAUTH_ENABLE == null || !Boolean.valueOf(OAUTH_ENABLE))  {
-			return true;
-		}
-        
-		String authHeader = theRequest.getHeader(HttpHeaders.AUTHORIZATION);
-        if (authHeader == null){
-            logger.warn("OAuth2 Authentication failure.  No OAuth Token supplied in Authorization Header on Request.");
+        if (OAUTH_ENABLE == null || !Boolean.valueOf(OAUTH_ENABLE)) {
+            return true;
+        }
+
+        String authHeader = theRequest.getHeader(HttpHeaders.AUTHORIZATION);
+        if (authHeader == null) {
+            logger.error("OAuth2 Authentication failure.  No OAuth Token supplied in Authorization Header on Request.");
             throw new AuthenticationException("Unauthorised access to protected resource");
         }
-        
-        String authToken = null;
-        if (authHeader.toUpperCase().startsWith(BEARER)) 
-            authToken = authHeader.substring(BEARER.length());
-        else 
+
+        if (authHeader.toUpperCase()
+            .startsWith(BEARER) == false)
             throw new AuthenticationException("Invalid OAuth Header. Missing Bearer prefix");
-        
+
         RestTemplate restTemplate = new RestTemplate();
         HttpHeaders headers = new HttpHeaders();
-        headers.set("Authorization", authToken);
+        headers.set("Authorization", authHeader);
 
         HttpEntity<String> entity = new HttpEntity<>(headers);
 
         ResponseEntity<String> response = restTemplate.exchange(OAUTH_URL, HttpMethod.GET, entity, String.class);
-        
-   		if (response.getStatusCode().value() != HttpStatus.OK.value()) {
-            logger.warn("OAuth2 Authentication failure. Invalid OAuth Token supplied in Authorization Header on Request.");
+
+        if (response.getStatusCode()
+            .value() != HttpStatus.OK.value()) {
+            logger.error("OAuth2 Authentication failure. "
+                + "Invalid OAuth Token supplied in Authorization Header on Request.");
             throw new AuthenticationException("Unauthorised access to protected resource");
         }
 

@@ -98,7 +98,7 @@ services:
   hapi-fhir:
     container_name: hapi-fhir
     build: .
-#    environment:
+    environment:
 #       # Specify DB_VENDOR in .env if you want a non default db in HAPI
 #      DB_VENDOR: ${DB_VENDOR}
 #      DB_HOST: ${DB_HOST}
@@ -106,8 +106,8 @@ services:
 #      DB_DATABASE: ${DB_DB}
 #      DB_USER: ${DB_USER}
 #      DB_PASSWORD: ${DB_PASSWORD}
-#      OAUTH_URL: ${OAUTH_URL}  
-#      OAUTH_ENABLE: ${OAUTH_ENABLE}
+      OAUTH_URL: ${OAUTH_URL}  
+      OAUTH_ENABLE: ${OAUTH_ENABLE}
     ports:
       - 8080:8080
     depends_on:
@@ -120,7 +120,7 @@ services:
 
 # Auth service
   auth:
-    image: ccavero/keycloak-auth:latest
+    image: arihealth/oauth-easy:latest
     container_name: auth
     environment:
       KEYCLOAK_URL: ${KEYCLOAK_URL}
