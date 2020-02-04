@@ -18,8 +18,7 @@
  * See README file for the full disclaimer information and LICENSE file for full license 
  * information in the project root.
  * 
- * @author	Carlos Cavero
- *			Atos Research and Innovation, Atos SPAIN SA
+ * @author Atos Research and Innovation, Atos SPAIN SA
  * 
  * OAuth 2.0 Token definition
  */
