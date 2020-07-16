@@ -2,6 +2,7 @@
 
 [![Build Status](https://travis-ci.org/AriHealth/hapi-fhir-jpaserver-oauth.svg?branch=master)](https://travis-ci.org/AriHealth/hapi-fhir-jpaserver-oauth) 
 [![codecov.io](https://codecov.io/gh/AriHealth/hapi-fhir-jpaserver-oauth/branch/master/graphs/badge.svg)](http://codecov.io/gh/AriHealth/hapi-fhir-jpaserver-oauth)
+[![Quality Gate](https://sonarcloud.io/api/project_badges/measure?project=ca.uhn.hapi.fhir:hapi-fhir-jpaserver-oauth&metric=alert_status)](https://sonarcloud.io/dashboard/index/ca.uhn.hapi.fhir:hapi-fhir-jpaserver-oauth)
 [![Docker Build](https://img.shields.io/docker/cloud/build/arihealth/hapi-fhir-cdr-oauth)](https://cloud.docker.com/u/arihealth/repository/docker/arihealth/hapi-fhir-cdr-oauth)
 [![Docker Pulls](https://img.shields.io/docker/pulls/arihealth/hapi-fhir-cdr-oauth)](https://cloud.docker.com/u/arihealth/repository/docker/arihealth/hapi-fhir-cdr-oauth)
 [![License](https://img.shields.io/badge/License-Apache%202.0-green.svg)](https://opensource.org/licenses/Apache-2.0)
